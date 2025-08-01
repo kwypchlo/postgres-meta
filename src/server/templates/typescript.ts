@@ -344,7 +344,9 @@ export type Database = {
                         .join(' | ')}
                       Returns: ${(() => {
                         // Case 1: `returns table`.
-                        const tableArgs = fns[0].args.filter(({ mode }) => mode === 'table')
+                        const tableArgs = fns[0].args
+                          .filter(({ mode }) => mode === 'table')
+                          .toSorted((a, b) => a.name.localeCompare(b.name))
                         if (tableArgs.length > 0) {
                           const argsNameAndType = tableArgs.map(({ name, type_id }) => {
                             const type = types.find(({ id }) => id === type_id)
